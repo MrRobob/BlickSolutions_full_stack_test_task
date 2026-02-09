@@ -2,7 +2,7 @@ import { Schema, model, Document } from 'mongoose';
 
 /**
  * Einkaufsartikel-Dokument-Schnittstelle
- * 
+ *
  * Erweitert Mongoose Document und definiert das TypeScript Interface
  * für Einkaufsartikel in der Datenbank.
  */
@@ -15,7 +15,7 @@ export interface IShoppingItem extends Document {
 
 /**
  * Einkaufsartikel-Schema
- * 
+ *
  * Definiert die Struktur und Validierungsregeln für Einkaufsartikel
  */
 const ShoppingItemSchema = new Schema<IShoppingItem>(
@@ -39,10 +39,7 @@ const ShoppingItemSchema = new Schema<IShoppingItem>(
 
 /**
  * Einkaufsartikel-Modell
- * 
+ *
  * MongoDB-Modell zur Verwaltung der Einkaufsartikel-Sammlung
  */
-export const ShoppingItem = model<IShoppingItem>(
-  'ShoppingItem',
-  ShoppingItemSchema
-);
+export const ShoppingItem = model<IShoppingItem>('ShoppingItem', ShoppingItemSchema);

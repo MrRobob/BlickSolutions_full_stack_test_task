@@ -20,7 +20,7 @@ export const api = {
       const response = await axios.get<ShoppingItem[]>(API_BASE_URL);
       return response.data;
     } catch (error) {
-      console.error('Error fetching items:', error);
+      console.error('Fehler beim Abrufen von Artikeln:', error);
       throw error;
     }
   },
@@ -36,7 +36,7 @@ export const api = {
       const response = await axios.post<ShoppingItem>(API_BASE_URL, payload);
       return response.data;
     } catch (error) {
-      console.error('Error creating item:', error);
+      console.error('Fehler beim Erstellen eines Artikels:', error);
       throw error;
     }
   },
@@ -53,7 +53,7 @@ export const api = {
       const response = await axios.put<ShoppingItem>(`${API_BASE_URL}/${id}`, payload);
       return response.data;
     } catch (error) {
-      console.error('Error updating item:', error);
+      console.error('Fehler beim Aktualisieren eines Artikels:', error);
       throw error;
     }
   },
@@ -68,7 +68,7 @@ export const api = {
     try {
       await axios.delete(`${API_BASE_URL}/${id}`);
     } catch (error) {
-      console.error('Error deleting item:', error);
+      console.error('Fehler beim Löschen eines Artikels:', error);
       throw error;
     }
   },

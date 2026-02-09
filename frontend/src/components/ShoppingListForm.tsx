@@ -73,12 +73,15 @@ export const ShoppingListForm: React.FC<ShoppingListFormProps> = ({
         variant="outlined"
         sx={{
           '& .MuiOutlinedInput-root': {
-            color: 'inherit',
+            color: '#2678cb',
             '& fieldset': {
-              borderColor: 'rgba(255, 255, 255, 0.23)',
+              borderColor: '#ffffff',
             },
             '&:hover fieldset': {
-              borderColor: 'rgba(255, 255, 255, 0.4)',
+              borderColor: '#2E5C8A',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: '#2E5C8A',
             },
           },
         }}
@@ -93,7 +96,6 @@ export const ShoppingListForm: React.FC<ShoppingListFormProps> = ({
           minWidth: 120,
         }}
       >
-        Add
       </Button>
     </Box>
   );

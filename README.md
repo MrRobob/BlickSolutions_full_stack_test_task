@@ -183,3 +183,44 @@ interface ShoppingItem {
   updatedAt: Date;
 }
 ```
+
+## Code Quality & Linting
+
+Das Projekt nutzt `ESLint` und `Prettier` für hohe Code-Qualität und konsistente Formatierung.
+
+### Verfügbare Scripts
+
+**Frontend:**
+
+```bash
+cd frontend
+npm run dev        # Entwicklungsserver starten
+npm run build      # Produktions-Build erstellen
+npm run preview    # Produktions-Build anschauen
+npm run lint       # ESLint prüfen
+npm run lint:fix   # ESLint mit Auto-Fix
+```
+
+**Backend:**
+
+```bash
+cd backend
+npm run dev        # Entwicklungsserver mit ts-node starten
+npm run build      # TypeScript kompilieren
+npm run start      # Kompilierten Code ausführen
+npm run lint       # ESLint prüfen
+npm run lint:fix   # ESLint mit Auto-Fix
+npm run format:fix # Prettier Formatierung anwenden
+```
+
+**Lokal vor dem Push linting:**
+
+```bash
+# Frontend
+cd frontend
+npm run lint:fix
+
+# Backend
+cd backend
+npm run lint:fix
+```
