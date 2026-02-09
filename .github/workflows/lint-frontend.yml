@@ -1,12 +1,12 @@
-name: Lint Frontend on PR Merge to main
+name: Lint Frontend
 
 on:
   pull_request:
-    types: [closed]
+    branches:
+      - main
 
 jobs:
   lint-frontend:
-    if: ${{ github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
