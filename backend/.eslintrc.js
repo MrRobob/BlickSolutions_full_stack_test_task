@@ -17,5 +17,8 @@ module.exports = {
   ],
   rules: {
     'prettier/prettier': ['error'],
+    // Allow unused function arguments that start with an underscore (e.g. _next)
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    'no-unused-vars': 'off',
   },
 };

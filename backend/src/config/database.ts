@@ -2,14 +2,14 @@ import mongoose from 'mongoose';
 
 /**
  * MongoDB-Verbindungsfunktion
- * 
+ *
  * Stellt eine Verbindung zu MongoDB her mit der Verbindungszeichenfolge
  * aus Umgebungsvariablen oder Standardverbindung lokal.
  */
 export const connectDB = async (): Promise<void> => {
   try {
     const mongodbUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/shopping-list';
-    
+
     await mongoose.connect(mongodbUri, {
       retryWrites: true,
       writeConcern: { w: 'majority' },
@@ -24,7 +24,7 @@ export const connectDB = async (): Promise<void> => {
 
 /**
  * MongoDB-Trennungsfunktion
- * 
+ *
  * Trennt die MongoDB-Verbindung sauber.
  * Nützlich für die Bereinigung vor Prozessbeendigung.
  */

@@ -25,25 +25,43 @@ jobs:
           git fetch origin ${{ github.event.pull_request.base.ref }}
           CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} || true)
           BACKEND_CHANGED=$(echo "$CHANGED_FILES" | grep '^backend/' || true)
+          TS_FILES=$(echo "$BACKEND_CHANGED" | grep -E '\.ts$' | sed 's|^backend/||' | tr '\n' ' ')
           echo "changed_files<<EOF" >> $GITHUB_OUTPUT
           echo "$BACKEND_CHANGED" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
+          echo "ts_files=$TS_FILES" >> $GITHUB_OUTPUT
 
       - name: Install backend dependencies
-        if: ${{ steps.changed-files.outputs.changed_files != '' }}
+        if: ${{ steps.changed-files.outputs.ts_files != '' }}
         run: |
           cd backend
           npm ci
 
-      - name: Run ESLint on changed backend files
-        if: ${{ steps.changed-files.outputs.changed_files != '' }}
+      - name: ESLint auto-fix (backend)
+        if: ${{ steps.changed-files.outputs.ts_files != '' }}
         run: |
           cd backend
-          # Filter files to only .ts, remove 'backend/' prefix
-          FILES=$(echo "${{ steps.changed-files.outputs.changed_files }}" | grep -E '\.ts$' | sed 's|^backend/||' | tr '\n' ' ')
-          if [ -n "$FILES" ]; then
-            echo "Linting files: $FILES"
-            npx eslint $FILES --max-warnings=0
-          else
-            echo "No TypeScript files changed in backend"
-          fi
+          FILES="${{ steps.changed-files.outputs.ts_files }}"
+          echo "Running ESLint --fix on: $FILES"
+          npx eslint $FILES --fix --max-warnings=0
+
+      - name: Prettier auto-format (backend)
+        if: ${{ steps.changed-files.outputs.ts_files != '' }}
+        run: |
+          cd backend
+          FILES="${{ steps.changed-files.outputs.ts_files }}"
+          echo "Running Prettier --write on: $FILES"
+          npx prettier --write $FILES
+
+      - name: Show diff after auto-fix (backend)
+        if: ${{ steps.changed-files.outputs.ts_files != '' }}
+        run: |
+          git status --short
+          git diff --color=always || true
+
+      - name: ESLint verify (backend)
+        if: ${{ steps.changed-files.outputs.ts_files != '' }}
+        run: |
+          cd backend
+          FILES="${{ steps.changed-files.outputs.ts_files }}"
+          npx eslint $FILES --max-warnings=0

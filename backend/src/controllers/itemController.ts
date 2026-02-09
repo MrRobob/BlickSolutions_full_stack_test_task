@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ShoppingItem, IShoppingItem } from '../models/ShoppingItem';
+import { ShoppingItem } from '../models/ShoppingItem';
 
 /**
  * GET /items
@@ -18,7 +18,7 @@ export const getItems = async (req: Request, res: Response): Promise<void> => {
 /**
  * POST /items
  * Einen neuen Einkaufsartikel erstellen
- * 
+ *
  * Request Body:
  * {
  *   name: string (erforderlich)
@@ -61,7 +61,7 @@ export const createItem = async (req: Request, res: Response): Promise<void> => 
 /**
  * PUT /items/:id
  * Einen Einkaufsartikel aktualisieren (Gekauft-Status umschalten)
- * 
+ *
  * Request Body:
  * {
  *   bought: boolean (erforderlich)
@@ -86,7 +86,7 @@ export const updateItem = async (req: Request, res: Response): Promise<void> => 
     );
 
     if (!item) {
-      res.status(404).json({ error: 'Item not found' });
+      res.status(404).json({ error: 'Artikel nicht gefunden' });
       return;
     }
 
@@ -109,7 +109,7 @@ export const deleteItem = async (req: Request, res: Response): Promise<void> => 
     const item = await ShoppingItem.findByIdAndDelete(id);
 
     if (!item) {
-      res.status(404).json({ error: 'Item not found' });
+      res.status(404).json({ error: 'Artikel nicht gefunden' });
       return;
     }
 

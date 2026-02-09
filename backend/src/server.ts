@@ -50,21 +50,14 @@ app.use((req, res) => {
  * Globaler Fehler-Handler
  * Fängt und protokolliert unerwartete Fehler
  */
-app.use(
-  (
-    err: Error,
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
-  ) => {
-    console.error('Server-Fehler:', err);
-    res.status(500).json({ error: 'Interner Serverfehler' });
-  }
-);
+app.use((err: Error, req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  console.error('Server-Fehler:', err);
+  res.status(500).json({ error: 'Interner Serverfehler' });
+});
 
 /**
  * Server-Start
- * 
+ *
  * 1. Mit MongoDB verbinden
  * 2. Express-Server auf konfiguriertem Port starten
  */

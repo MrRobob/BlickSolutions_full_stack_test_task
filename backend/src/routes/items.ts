@@ -1,16 +1,11 @@
 import { Router } from 'express';
-import {
-  getItems,
-  createItem,
-  updateItem,
-  deleteItem,
-} from '../controllers/itemController';
+import { getItems, createItem, updateItem, deleteItem } from '../controllers/itemController';
 
 const router = Router();
 
 /**
  * Einkaufsartikel-Routen
- * 
+ *
  * Definiert alle Endpunkte für CRUD-Operationen auf Einkaufsartikeln
  */
 

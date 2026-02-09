@@ -165,7 +165,7 @@ Alle Endpunkte geben angemessene HTTP-Statuscodes und Fehlermeldungen zurück:
 
 - **400 Bad Request** - Ungültige Eingabe oder fehlende erforderliche Felder
 - **404 Not Found** - Artikel existiert nicht
-- **500 Internal Server Error** - Serverfehler
+- **500 Interner Serverfehler (Internal Server Error)** - Serverfehler
 
 Beispiel-Fehler-Response:
 

@@ -1,8 +1,8 @@
 /* ============================================== */
-/* Global Styles */
+/* Globale Styles */
 /* ============================================== */
 
-/* Root CSS variables and default styles */
+/* Root-CSS-Variablen und Standard-Stile */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -18,7 +18,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Link styles */
+/* Link-Stile */
 a {
   font-weight: 500;
   color: #646cff;
@@ -29,7 +29,7 @@ a:hover {
   color: #535bf2;
 }
 
-/* Button styles */
+/* Button-Stile */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -51,7 +51,7 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-/* Light mode overrides */
+/* Überschreibungen für den Hellmodus */
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -66,7 +66,7 @@ button:focus-visible {
 }
 
 /* ============================================== */
-/* Reset & Layout Fixes */
+/* Reset & Layout-Anpassungen */
 /* ============================================== */
 
 * {
@@ -75,7 +75,7 @@ button:focus-visible {
   box-sizing: border-box;
 }
 
-/* Ensure full viewport height for React root */
+/* Stelle volle Viewport-Höhe für das React-Root sicher */
 html, body, #root {
   height: 100%;
   width: 100%;
