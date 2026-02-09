@@ -1,0 +1,44 @@
+name: Lint Backend on PR Merge to main
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  lint-backend:
+    if: ${{ github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Determine changed files in PR
+        id: changed-files
+        run: |
+          git fetch origin ${{ github.event.pull_request.base.ref }}
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} || true)
+          BACKEND_CHANGED=$(echo "$CHANGED_FILES" | grep '^backend/' || true)
+          echo "changed_files<<EOF" >> $GITHUB_OUTPUT
+          echo "$BACKEND_CHANGED" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Install backend dependencies
+        if: ${{ steps.changed-files.outputs.changed_files != '' }}
+        run: |
+          cd backend
+          npm ci
+
+      - name: Run ESLint on changed backend files
+        if: ${{ steps.changed-files.outputs.changed_files != '' }}
+        run: |
+          FILES=$(echo "${{ steps.changed-files.outputs.changed_files }}" | tr '\n' ' ')
+          echo "Linting files: $FILES"
+          cd backend
+          npx eslint $FILES --ext .ts --max-warnings=0

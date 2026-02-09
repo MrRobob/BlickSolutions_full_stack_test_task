@@ -7,7 +7,9 @@
     "dev": "ts-node src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "lint": "eslint src --ext ts"
+    "lint": "eslint src --ext ts",
+    "lint:fix": "eslint src --ext ts --fix",
+    "format:fix": "prettier --write 'src/**/*.ts'"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -22,6 +24,12 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^20.8.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.0"
+    "typescript": "^5.2.0",
+    "eslint": "^8.47.0",
+    "prettier": "^2.8.8",
+    "@typescript-eslint/parser": "^6.5.0",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1"
   }
 }
