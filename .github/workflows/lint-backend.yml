@@ -38,7 +38,12 @@ jobs:
       - name: Run ESLint on changed backend files
         if: ${{ steps.changed-files.outputs.changed_files != '' }}
         run: |
-          FILES=$(echo "${{ steps.changed-files.outputs.changed_files }}" | tr '\n' ' ')
-          echo "Linting files: $FILES"
           cd backend
-          npx eslint $FILES --ext .ts --max-warnings=0
+          # Filter files to only .ts, remove 'backend/' prefix
+          FILES=$(echo "${{ steps.changed-files.outputs.changed_files }}" | grep -E '\.ts$' | sed 's|^backend/||' | tr '\n' ' ')
+          if [ -n "$FILES" ]; then
+            echo "Linting files: $FILES"
+            npx eslint $FILES --max-warnings=0
+          else
+            echo "No TypeScript files changed in backend"
+          fi
