@@ -1,0 +1,44 @@
+name: Lint Frontend on PR Merge to main
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  lint-frontend:
+    if: ${{ github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Determine changed files in PR
+        id: changed-files
+        run: |
+          git fetch origin ${{ github.event.pull_request.base.ref }}
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} || true)
+          FRONTEND_CHANGED=$(echo "$CHANGED_FILES" | grep '^frontend/' || true)
+          echo "changed_files<<EOF" >> $GITHUB_OUTPUT
+          echo "$FRONTEND_CHANGED" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Install frontend dependencies
+        if: ${{ steps.changed-files.outputs.changed_files != '' }}
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Run ESLint on changed frontend files
+        if: ${{ steps.changed-files.outputs.changed_files != '' }}
+        run: |
+          FILES=$(echo "${{ steps.changed-files.outputs.changed_files }}" | tr '\n' ' ')
+          echo "Linting files: $FILES"
+          cd frontend
+          npx eslint $FILES --ext .ts,.tsx,.js,.jsx --max-warnings=0
