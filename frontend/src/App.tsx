@@ -40,7 +40,7 @@ const cloudTheme = createTheme({
 
 /**
  * Haupt-App-Komponente
- * 
+ *
  * Verwaltet den Zustand der Einkaufslisten-App einschließlich:
  * - Laden und Anzeigen von Artikeln
  * - Hinzufügen neuer Artikel
@@ -70,7 +70,9 @@ function App() {
       const data = await api.getItems();
       setItems(data);
     } catch (err) {
-      setError('Fehler beim Laden der Einkaufsliste. Stelle sicher, dass der Backend-Server läuft.');
+      setError(
+        'Fehler beim Laden der Einkaufsliste. Stelle sicher, dass der Backend-Server läuft.'
+      );
       console.error(err);
     } finally {
       setLoading(false);
@@ -100,11 +102,7 @@ function App() {
   const handleToggleBought = async (id: string, bought: boolean) => {
     try {
       const updatedItem = await api.updateItem(id, { bought });
-      setItems(
-        items.map((item) =>
-          item._id === id ? updatedItem : item
-        )
-      );
+      setItems(items.map((item) => (item._id === id ? updatedItem : item)));
     } catch (err) {
       setError('Fehler beim Aktualisieren des Artikels');
       console.error(err);
@@ -171,7 +169,7 @@ function App() {
                   color: '#5A7A8F',
                 }}
               >
-                  {boughtCount} von {items.length} Artikeln gekauft
+                {boughtCount} von {items.length} Artikeln gekauft
               </Typography>
             </Box>
           </Box>
@@ -181,11 +179,7 @@ function App() {
 
           {/* Fehler-Alert */}
           {error && (
-            <Alert
-              severity="error"
-              onClose={() => setError(null)}
-              sx={{ mb: 2 }}
-            >
+            <Alert severity="error" onClose={() => setError(null)} sx={{ mb: 2 }}>
               {error}
             </Alert>
           )}

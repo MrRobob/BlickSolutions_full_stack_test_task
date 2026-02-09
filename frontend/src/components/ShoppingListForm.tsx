@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  TextField,
-  Button,
-  CircularProgress,
-} from '@mui/material';
+import { Box, TextField, Button, CircularProgress } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 /**
@@ -17,7 +12,7 @@ interface ShoppingListFormProps {
 
 /**
  * ShoppingListForm-Komponente
- * 
+ *
  * Verarbeitet Benutzereingabe zum Hinzufügen neuer Einkaufsartikel.
  * Beinhaltet Validierung und Fehlerbehandlung.
  */
@@ -34,7 +29,7 @@ export const ShoppingListForm: React.FC<ShoppingListFormProps> = ({
    */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!itemName.trim()) {
       setError('Bitte geben Sie einen Produktnamen ein');
       return;
@@ -95,8 +90,7 @@ export const ShoppingListForm: React.FC<ShoppingListFormProps> = ({
         sx={{
           minWidth: 120,
         }}
-      >
-      </Button>
+      ></Button>
     </Box>
   );
 };

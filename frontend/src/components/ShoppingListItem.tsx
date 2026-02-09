@@ -21,7 +21,7 @@ interface ShoppingListItemProps {
 
 /**
  * ShoppingListItem-Komponente
- * 
+ *
  * Zeigt einen einzelnen Einkaufsartikel mit einem Kontrollkästchen zum Markieren als Gekauft
  * und einem Löschen-Button zum Entfernen des Artikels an.
  * Durchstreicheffekt wird angewendet, wenn Artikel als gekauft markiert ist.
@@ -34,12 +34,7 @@ export const ShoppingListItem: React.FC<ShoppingListItemProps> = ({
   return (
     <ListItem
       secondaryAction={
-        <IconButton
-          edge="end"
-          aria-label="delete"
-          onClick={() => onDelete(item._id)}
-          color="error"
-        >
+        <IconButton edge="end" aria-label="delete" onClick={() => onDelete(item._id)} color="error">
           <DeleteIcon />
         </IconButton>
       }
@@ -54,18 +49,9 @@ export const ShoppingListItem: React.FC<ShoppingListItemProps> = ({
         },
       }}
     >
-      <ListItemButton
-        role={undefined}
-        onClick={() => onToggleBought(item._id, !item.bought)}
-        dense
-      >
+      <ListItemButton role={undefined} onClick={() => onToggleBought(item._id, !item.bought)} dense>
         <ListItemIcon>
-          <Checkbox
-            edge="start"
-            checked={item.bought}
-            tabIndex={-1}
-            disableRipple
-          />
+          <Checkbox edge="start" checked={item.bought} tabIndex={-1} disableRipple />
         </ListItemIcon>
         <ListItemText
           primary={item.name}

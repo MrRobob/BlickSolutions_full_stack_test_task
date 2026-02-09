@@ -25,25 +25,43 @@ jobs:
           git fetch origin ${{ github.event.pull_request.base.ref }}
           CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} || true)
           FRONTEND_CHANGED=$(echo "$CHANGED_FILES" | grep '^frontend/' || true)
+          TS_FILES=$(echo "$FRONTEND_CHANGED" | grep -E '\.(ts|tsx)$' | sed 's|^frontend/||' | tr '\n' ' ')
           echo "changed_files<<EOF" >> $GITHUB_OUTPUT
           echo "$FRONTEND_CHANGED" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
+          echo "ts_files=$TS_FILES" >> $GITHUB_OUTPUT
 
       - name: Install frontend dependencies
-        if: ${{ steps.changed-files.outputs.changed_files != '' }}
+        if: ${{ steps.changed-files.outputs.ts_files != '' }}
         run: |
           cd frontend
           npm ci
 
-      - name: Run ESLint on changed frontend files
-        if: ${{ steps.changed-files.outputs.changed_files != '' }}
+      - name: ESLint auto-fix (frontend)
+        if: ${{ steps.changed-files.outputs.ts_files != '' }}
         run: |
           cd frontend
-          # Filter files to only .ts and .tsx, remove 'frontend/' prefix
-          FILES=$(echo "${{ steps.changed-files.outputs.changed_files }}" | grep -E '\.(ts|tsx)$' | sed 's|^frontend/||' | tr '\n' ' ')
-          if [ -n "$FILES" ]; then
-            echo "Linting files: $FILES"
-            npx eslint $FILES --max-warnings=0
-          else
-            echo "No TypeScript/JSX files changed in frontend"
-          fi
+          FILES="${{ steps.changed-files.outputs.ts_files }}"
+          echo "Running ESLint --fix on: $FILES"
+          npx eslint $FILES --fix --max-warnings=0
+
+      - name: Prettier auto-format (frontend)
+        if: ${{ steps.changed-files.outputs.ts_files != '' }}
+        run: |
+          cd frontend
+          FILES="${{ steps.changed-files.outputs.ts_files }}"
+          echo "Running Prettier --write on: $FILES"
+          npx prettier --write $FILES
+
+      - name: Show diff after auto-fix (frontend)
+        if: ${{ steps.changed-files.outputs.ts_files != '' }}
+        run: |
+          git status --short
+          git diff --color=always || true
+
+      - name: ESLint verify (frontend)
+        if: ${{ steps.changed-files.outputs.ts_files != '' }}
+        run: |
+          cd frontend
+          FILES="${{ steps.changed-files.outputs.ts_files }}"
+          npx eslint $FILES --max-warnings=0

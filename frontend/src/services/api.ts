@@ -5,14 +5,14 @@ const API_BASE_URL = 'http://localhost:5000/items';
 
 /**
  * API-Service - Axios-basierter HTTP-Client
- * 
+ *
  * Bietet Methoden für alle CRUD-Operationen auf Einkaufsartikeln.
  * Alle Methoden sind Type-safe mit TypeScript Generics.
  */
 export const api = {
   /**
    * Alle Einkaufsartikel vom Backend abrufen
-   * 
+   *
    * @returns {Promise<ShoppingItem[]>} Array von Einkaufsartikeln
    */
   getItems: async (): Promise<ShoppingItem[]> => {
@@ -27,7 +27,7 @@ export const api = {
 
   /**
    * Einen neuen Einkaufsartikel erstellen
-   * 
+   *
    * @param {CreateItemPayload} payload - Objekt mit Artikelname
    * @returns {Promise<ShoppingItem>} Der erstellte Artikel mit MongoDB-ID
    */
@@ -43,7 +43,7 @@ export const api = {
 
   /**
    * Einen Einkaufsartikel aktualisieren
-   * 
+   *
    * @param {string} id - MongoDB ObjectId des Artikels
    * @param {UpdateItemPayload} payload - Objekt mit Gekauft-Status
    * @returns {Promise<ShoppingItem>} Der aktualisierte Artikel
@@ -60,7 +60,7 @@ export const api = {
 
   /**
    * Einen Einkaufsartikel löschen
-   * 
+   *
    * @param {string} id - MongoDB ObjectId des Artikels
    * @returns {Promise<void>}
    */

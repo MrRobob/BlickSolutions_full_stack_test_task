@@ -1,6 +1,6 @@
 /**
  * Einkaufsartikel-Typ
- * 
+ *
  * Repräsentiert einen einzelnen Artikel in der Einkaufsliste.
  * Entspricht der MongoDB-Dokumentenstruktur.
  */
@@ -13,7 +13,7 @@ export interface ShoppingItem {
 
 /**
  * Payload zum Erstellen eines neuen Einkaufsartikels
- * 
+ *
  * @property name - Produktname (erforderlich)
  */
 export interface CreateItemPayload {
@@ -22,7 +22,7 @@ export interface CreateItemPayload {
 
 /**
  * Payload zum Aktualisieren eines Einkaufsartikels
- * 
+ *
  * @property bought - Kaufstatus (erforderlich)
  */
 export interface UpdateItemPayload {
